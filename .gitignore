@@ -1,8 +1,22 @@
-.venv/
+# Python
 __pycache__/
-**/__pycache__
-*.pyc
-instance/
-*.db
-.env
+*.py[cod]
 .pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual env
+.venv/
+venv/
+env/
+
+# Flask
+instance/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
