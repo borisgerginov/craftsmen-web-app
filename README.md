@@ -55,14 +55,14 @@ cd craftsmen-web-app
 ```
 
 ## 2️⃣ Създаване на виртуална среда
-Windows (PowerShell)
+**Windows (PowerShell)**
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-Linux / macOS
+**Linux / macOS**
 
 ```bash
 python3 -m venv .venv
