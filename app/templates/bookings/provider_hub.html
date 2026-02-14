@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Provider Bookings{% endblock %}
+{% block content %}
+  <h1>Bookings</h1>
+
+  <p>Меню за майстор:</p>
+
+  <div style="display:flex; gap:12px; flex-wrap:wrap; margin: 12px 0;">
+    <a href="{{ url_for('provider_bookings.incoming') }}">📥 Incoming bookings</a>
+    <a href="{{ url_for('provider_bookings.schedule') }}">🗓️ My schedule</a>
+  </div>
+
+{% endblock %}

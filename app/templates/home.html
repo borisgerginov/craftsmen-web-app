@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <h1>Craftsman</h1>
+  <p>Намери майстор наблизо или управлявай услугите си.</p>
+
+  <div style="display:flex; gap:12px; flex-wrap:wrap; margin:16px 0;">
+    <a href="{{ url_for('search.search') }}">🔎 Search services</a>
+
+    {% if current_user.is_authenticated and current_user.role == "customer" %}
+      <a href="{{ url_for('provider.apply') }}">🛠️ Кандидатствай за майстор</a>
+    {% endif %}
+
+    {% if current_user.is_authenticated and current_user.role == "provider" %}
+      <a href="{{ url_for('provider_service.list_services') }}">🧰 My Services</a>
+    {% endif %}
+
+    {% if current_user.is_authenticated and current_user.role == "admin" %}
+      <a href="{{ url_for('admin.pending_providers') }}">📄 Pending Providers</a>
+    {% endif %}
+
+    {% if current_user.is_authenticated and current_user.role in ["customer", "provider"]  %}
+        <a href="{{ url_for('bookings.my_bookings') }}">📌 My bookings</a>
+    {% endif %}
+
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('notifications.list_notifications') }}">🔔 Notifications</a>
+    {% endif %}
+
+    {% if current_user.is_authenticated and current_user.role == "customer" %}
+        <a href="{{ url_for('favourites.list_favourites') }}">❤️ Favourites</a>
+    {% endif %}
+
+    {% if current_user.is_authenticated and current_user.role == "admin" %}
+        <a href="{{ url_for('admin.dashboard') }}">🛠 Admin</a>
+    {% endif %}
+
+  </div>
+
+  {% if current_user.is_authenticated %}
+    <p>Логнат си като: <b>{{ current_user.email }}({{ current_user.role }})</b></p>
+  {% endif %}
+{% endblock %}

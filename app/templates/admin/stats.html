@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Admin Stats{% endblock %}
+{% block content %}
+  <h1>Stats</h1>
+
+  <ul>
+    <li>Users: {{ data.users }}</li>
+    <li>Services: {{ data.services }}</li>
+    <li>Bookings: {{ data.bookings }}</li>
+    <li>Reviews: {{ data.reviews }}</li>
+    <li>Payments: {{ data.payments }}</li>
+  </ul>
+{% endblock %}

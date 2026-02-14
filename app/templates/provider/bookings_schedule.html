@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Schedule{% endblock %}
+{% block content %}
+  <h1>My schedule</h1>
+
+  {% if not items %}
+    <p>Нямаш приети резервации.</p>
+  {% else %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Service</th>
+          <th>When</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in items %}
+          <tr>
+            <td>{{ b.id }}</td>
+            <td>{{ b.service.title if b.service else b.service_id }}</td>
+            <td>{{ b.scheduled_at }}</td>
+            <td>{{ b.status }}</td>
+            <td>
+              <form method="post" action="{{ url_for('provider_bookings.complete', booking_id=b.id) }}" style="display:inline;">
+                <button type="submit">Mark completed</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+{% endblock %}

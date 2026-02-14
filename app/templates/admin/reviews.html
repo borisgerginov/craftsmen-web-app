@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Admin Reviews{% endblock %}
+{% block content %}
+  <h1>Reviews</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Booking</th><th>Rating</th><th>Comment</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in items %}
+        <tr>
+          <td>{{ r.id }}</td>
+          <td>{{ r.booking_id }}</td>
+          <td>{{ r.rating }}</td>
+          <td>{{ (r.comment or "")[:120] }}{% if r.comment and r.comment|length > 120 %}...{% endif %}</td>
+          <td>
+            <form method="post" action="{{ url_for('admin.delete_review', review_id=r.id) }}" style="display:inline;">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

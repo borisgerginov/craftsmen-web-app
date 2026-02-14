@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Provider{% endblock %}
+{% block content %}
+  <h1>Профил на майстор</h1>
+
+  <div class="card">
+    <p><b>{{ prof.first_name if prof and prof.first_name else "" }} {{ prof.last_name if prof and prof.last_name else "" }}</b></p>
+    <p>Email: {{ provider.email }}</p>
+
+    {% if pp and pp.is_verified %}
+      <p>Status: ✅ Verified</p>
+    {% else %}
+      <p>Status: ⏳ Not verified</p>
+    {% endif %}
+
+    {% if pp and pp.bio %}
+      <p>{{ pp.bio }}</p>
+    {% endif %}
+  </div>
+
+  <hr>
+
+  <h2>Услуги</h2>
+  {% if not services %}
+    <p>Няма добавени услуги.</p>
+  {% else %}
+    <ul>
+      {% for s in services %}
+        <li>
+          <b>{{ s.title }}</b>
+          {% if s.price %} - {{ s.price }} BGN{% endif %}
+          {% if s.location %} - {{ s.location }}{% endif %}
+          <br>
+          {{ (s.description or "")[:160] }}{% if s.description and s.description|length > 160 %}...{% endif %}
+
+          {% if current_user.is_authenticated and current_user.role == "customer" %}
+            <br>
+            <a href="{{ url_for('bookings.create_booking', service_id=s.id) }}">Book</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <hr>
+
+  <h2>Ревюта</h2>
+  {% if not reviews %}
+    <p>Няма ревюта.</p>
+  {% else %}
+    <ul>
+      {% for r in reviews %}
+        <li>
+          <b>{{ r.rating }}/5</b>
+          {% if r.comment %}- {{ r.comment }}{% endif %}
+          <small> ({{ r.created_at }})</small>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Чакащи майстори{% endblock %}
+
+{% block content %}
+    <div class="page">
+        <div class="card">
+            <h1 class="title">Чакащи майстори</h1>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash">
+                        <ul>{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% if not pending %}
+                <p>Няма чакащи кандидатури.</p>
+            {% else %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Provider ID</th>
+                            <th>Bio</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pp in pending %}
+                            <tr>
+                                <td>{{ pp.provider_id }}</td>
+                                <td>{{ (pp.bio or "")[:80] }}{% if pp.bio and pp.bio|length > 80 %}...{% endif %}</td>
+                                <td>
+                                    <form method="post" action="{{ url_for('admin.approve_provider', provider_id=pp.provider_id) }}" style="display:inline;">
+                                        <button type="submit">Approve</button>
+                                    </form>
+                                    <form method="post" action="{{ url_for('admin.reject_provider', provider_id=pp.provider_id) }}" style="display:inline;">
+                                        <button type="submit">Reject</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Кандидатствай за майстор{% endblock %}
+
+{% block content %}
+    <div class="page">
+        <div class="card">
+            <h1 class="title">Кандидатствай за майстор</h1>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash">
+                        <ul>{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% if pp %}
+                <p>Кандидатурата вече е подадена. Статус: <b>{{ "Одобрен" if pp.is_verified else "Чака одобрение ⏳" }}</b></p>
+                <a href="{{ url_for('provider.status') }}">Виж статус</a>
+            {% else %}
+                <form method="post">
+                    <label>Кратко описание (bio)</label>
+                    <textarea name="bio" rows="4" placeholder="Опит, специалности..."></textarea>
+
+                    <label>Галерия (линкове като текст)</label>
+                    <textarea name="gallery_links" rows="3" placeholder="Пример: https://img1 ... (по един на ред)"></textarea>
+
+                    <label>Сертификати (като текст)</label>
+                    <textarea name="certificates" rows="3" placeholder="Пример: Сертификат X, година..."></textarea>
+
+                    <button type="submit" class="btn btn-primary">Изпрати кандидатура</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

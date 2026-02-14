@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Add Review{% endblock %}
+{% block content %}
+  <h1>Остави ревю</h1>
+
+  <p>
+    Booking #{{ b.id }} |
+    Service: <b>{{ b.service.title if b.service else b.service_id }}</b>
+  </p>
+
+  <form method="post">
+    <label>Рейтинг (1–5)</label><br>
+    <select name="rating" required>
+      <option value="">-- избери --</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <br><br>
+
+    <label>Коментар</label><br>
+    <textarea name="comment" rows="4" placeholder="Напиши кратък коментар..."></textarea>
+    <br><br>
+
+    <button type="submit">Запази</button>
+  </form>
+
+  <p><a href="{{ url_for('bookings.my_bookings') }}">Назад</a></p>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Favourites{% endblock %}
+{% block content %}
+  <h1>Любими услуги</h1>
+
+  {% if not items %}
+    <p>Нямаш любими услуги.</p>
+  {% else %}
+    <ul>
+      {% for f, s in items %}
+        <li>
+          <b>{{ s.title }}</b>
+          {% if s.category %} ({{ s.category.name }}){% endif %}
+          {% if s.price %} - {{ s.price }} BGN{% endif %}
+          {% if s.location %} - {{ s.location }}{% endif %}
+          <br>
+          {{ (s.description or "")[:140] }}{% if s.description and s.description|length > 140 %}...{% endif %}
+
+          <div style="margin-top:6px;">
+            <form method="post" action="{{ url_for('favourites.remove_favourite', service_id=s.id) }}" style="display:inline;">
+              <button type="submit">Remove</button>
+            </form>
+            <a href="{{ url_for('public.provider_profile', provider_id=s.provider_id) }}">View provider</a>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

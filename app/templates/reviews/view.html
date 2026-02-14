@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Review{% endblock %}
+{% block content %}
+  <h1>Ревю</h1>
+
+  <p>Rating: <b>{{ r.rating }}/5</b></p>
+
+  {% if r.comment %}
+    <p>{{ r.comment }}</p>
+  {% else %}
+    <p><i>Няма коментар.</i></p>
+  {% endif %}
+
+  <p>Created: {{ r.created_at }}</p>
+{% endblock %}

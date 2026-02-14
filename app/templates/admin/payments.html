@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Admin Payments{% endblock %}
+{% block content %}
+  <h1>Payments</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Booking</th><th>Amount</th><th>Status</th><th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in items %}
+        <tr>
+          <td>{{ p.id }}</td>
+          <td>{{ p.booking_id }}</td>
+          <td>{{ p.amount }}</td>
+          <td>{{ p.status }}</td>
+          <td>{{ p.created_at }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

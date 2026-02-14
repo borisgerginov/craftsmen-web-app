@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Incoming{% endblock %}
+{% block content %}
+  <h1>Incoming bookings</h1>
+
+  {% if not items %}
+    <p>Няма чакащи заявки.</p>
+  {% else %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Service</th>
+          <th>When</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in items %}
+          <tr>
+            <td>{{ b.id }}</td>
+            <td>{{ b.service.title if b.service else b.service_id }}</td>
+            <td>{{ b.scheduled_at }}</td>
+            <td>{{ (b.notes or "")[:80] }}{% if b.notes and b.notes|length > 80 %}...{% endif %}</td>
+            <td>
+              <form method="post" action="{{ url_for('provider_bookings.accept', booking_id=b.id) }}" style="display:inline;">
+                <button type="submit">Accept</button>
+              </form>
+              <form method="post" action="{{ url_for('provider_bookings.reject', booking_id=b.id) }}" style="display:inline;">
+                <button type="submit">Reject</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+{% endblock %}

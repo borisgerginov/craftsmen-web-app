@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Admin Services{% endblock %}
+{% block content %}
+  <h1>Services</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Title</th><th>Provider</th><th>Price</th><th>Location</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in items %}
+        <tr>
+          <td>{{ s.id }}</td>
+          <td>{{ s.title }}</td>
+          <td>{{ s.provider_id }}</td>
+          <td>{{ s.price }}</td>
+          <td>{{ s.location }}</td>
+          <td>
+            <form method="post" action="{{ url_for('admin.delete_service', service_id=s.id) }}" style="display:inline;">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

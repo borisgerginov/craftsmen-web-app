@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Admin Bookings{% endblock %}
+{% block content %}
+  <h1>Bookings</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Customer</th><th>Provider</th><th>Service</th><th>When</th><th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for b in items %}
+        <tr>
+          <td>{{ b.id }}</td>
+          <td>{{ b.customer_id }}</td>
+          <td>{{ b.provider_id }}</td>
+          <td>{{ b.service_id }}</td>
+          <td>{{ b.scheduled_at }}</td>
+          <td>{{ b.status }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Статус кандидатура{% endblock %}
+
+{% block content %}
+    <div class="page">
+        <div class="card">
+            <h1 class="title">Статус кандидатура</h1>
+
+            {% if not pp %}
+                <p>Нямаш кандидатура</p>
+                <a href="{{ url_for('provider.apply') }}">Кандидатствай</a>
+            {% else %}
+                <p>Статус: <b>{{ "Одобрен ✅" if pp.is_verified else "Чака одобрение ⏳" }}</b></p>
+                <p><b>Bio:</b> {{ pp.bio or "-" }}</p>
+                <p><b>Gallery links:</b> {{ pp.gallery_links or "-" }}</p>
+                <p><b>Certificates:</b> {{ pp.certificates or "-" }}</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}My Services{% endblock %}
+{% block content %}
+    <h1>My Services</h1>
+
+   
+
+    <p><a href="{{ url_for('provider_service.new_service') }}">+ New service</a></p>
+
+    {% if not services %}
+        <p>No services yet.</p>
+    {% else %}
+        <ul>
+            {% for s in services %}
+                <li>
+                    <b>{{ s.title }}</b>
+                    {% if s.category %} ({{ s.category.name }}) {% endif %}
+                    {% if s.price %} - {{ s.price }} BGN{% endif %}
+                    {% if s.location %} - {{ s.location }}{% endif %}
+                    <br>
+                    <a href="{{ url_for('provider_service.edit_service', service_id=s.id) }}">Edit</a>
+                    <form method="post" action="{{ url_for('provider_service.delete_service', service_id=s.id) }}" style="display:inline">
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

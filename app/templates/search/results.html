@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+
+    <h1>Search services</h1>
+
+    <form method="get" action="{{ url_for('search.search') }}">
+        <input type="text" name="q" placeholder="keyword" value="{{ q }}">
+        <input type="text" name="location" placeholder="location" value="{{ location }}">
+
+        <select name="category_id">
+            <option value="">All categories</option>
+            {% for c in categories %}
+                <option value="{{ c.id }}" {% if category_id|int == c.id %}selected{% endif %}>{{ c.name }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Search</button>
+    </form>
+
+    <hr>
+
+    {% if not results %}
+        <p>No results</p>
+    {% else %}
+        <ul>
+            {% for s in results %}
+                <li>
+                    <b>{{ s.title }}</b>
+                    <a href="{{ url_for('public.provider_profile', provider_id=s.provider_id) }}">View provider</a>
+                    {% if s.category %} ({{ s.category.name }}){% endif %}
+                    {% if s.price %} - {{ s.price }} BGN{% endif %}
+                    {% if s.location %} - {{ s.location }}{% endif %}
+                    <br>
+                    {{ (s.description or "")[:160] }}{% if s.description and s.description|length > 160 %}...{% endif %}
+                    {% if current_user.is_authenticated and current_user.role == "customer" %}
+                        <a href="{{ url_for('bookings.create_booking', service_id=s.id) }}">Book</a>
+                    {% endif %}
+
+                    {% if current_user.is_authenticated and current_user.role == "customer" %}
+                        <form method="post" action="{{ url_for('favourites.add_favourite', service_id=s.id) }}" style="display:inline;">
+                            <button type="submit">❤️ Любим</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

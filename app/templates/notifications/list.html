@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Notifications{% endblock %}
+{% block content %}
+  <h1>Notifications</h1>
+
+  {% if not items %}
+    <p>No notifications.</p>
+  {% else %}
+    <ul>
+      {% for n in items %}
+        <li>
+          {% if not n.is_read %}<b>[NEW]</b>{% endif %}
+          {{ n.message }}
+          <small>({{ n.created_at }})</small>
+
+          {% if not n.is_read %}
+            <form method="post" action="{{ url_for('notifications.mark_read', notif_id=n.id) }}" style="display:inline;">
+              <button type="submit">Mark read</button>
+            </form>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

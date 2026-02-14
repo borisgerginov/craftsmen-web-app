@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+    <div class="page">
+        <div class="card">
+            <h1 class="title">My Profile</h1>
+            <p class="subtitle">Редактирай личните си данни</p>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash flash-success">
+                        <ul class="flash-list">
+                            {% for m in messages %}
+                                <li class="flash-item">{{ m }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="post" class="form">
+                <div class="grid-2">
+                    <label class="field">
+                        <span class="field-label">First name</span>
+                        <input class="field-input" type="text" name="first_name"
+                               value="{{ prof.first_name or '' }}" placeholder="Boris">
+                    </label>
+
+                    <label class="field">
+                        <span class="field-label">Last name</span>
+                        <input class="field-input" type="text" name="last_name"
+                               value="{{ prof.last_name or '' }}" placeholder="Gerginov">
+                    </label>
+                </div>
+
+                <label class="field">
+                    <span class="field-label">Address</span>
+                    <input class="field-input" type="text" name="address"
+                           value="{{ prof.address or '' }}" placeholder="Sofia, Studentski grad...">
+                </label>
+
+                <label class="field">
+                    <span class="field-label">Preferences</span>
+                    <textarea class="field-textarea" name="preferences" rows="4"
+                              placeholder="Напр. свободен след 18:00, предпочитам вътрешни известия...">{{ prof.preferences or '' }}</textarea>
+                </label>
+
+                <button class="btn btn-primary" type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

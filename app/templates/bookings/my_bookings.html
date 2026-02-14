@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}My Bookings{% endblock %}
+{% block content %}
+    <h1>My bookings</h1>
+
+    {% if current_user.is_authenticated and current_user.role == "provider" %}
+        <div style="display:flex; gap:12px; margin: 12px 0;">
+            <a href="{{ url_for('provider_bookings.incoming') }}">📥 Incoming bookings</a>
+            <a href="{{ url_for('provider_bookings.schedule') }}">🗓️ My schedule</a>
+        </div>
+    {% endif %}
+
+    {% if not items %}
+        <p>Нямаш заявки.</p>
+    {% else %}
+        <table>
+            <thread>
+                <tr>
+                    <th>ID</th>
+                    <th>Услуга</th>
+                    <th>Кога</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                </tr>
+            </thread>
+            <tbody>
+                {% for b in items %}
+                    <tr>
+                        <td>{{ b.id }}</td>
+                        <td>{{ b.service.title if b.service else b.service_id }}</td>
+                        <td>{{ b.scheduled_at }}</td>
+                        <td>{{ b.status }}</td>
+                        <td>
+                            {% if b.status in ["pending", "accepted"] %}
+                                <form method="post" action="{{ url_for('bookings.cancel_booking', booking_id=b.id)}}" style="display:inline">
+                                    <button type="submit">Cancel</button>
+                                </form>
+                            {% endif %}
+
+                            {% if b.status in ["accepted", "completed"] %}
+                                <form method="post" action="{{ url_for('payments.pay_booking', booking_id=b.id) }}" style="display:inline;">
+                                    <button type="submit">Pay</button>
+                                </form>
+                            {% endif %}
+
+                            {% if b.status == "completed" %}
+                                <a href="{{ url_for('reviews.add_review', booking_id=b.id) }}">Leave review</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
