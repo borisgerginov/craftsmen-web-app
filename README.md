@@ -72,7 +72,7 @@ source .venv/bin/activate
 ## 3️⃣ Инсталиране на зависимости
 Проектът използва **requirements.txt**. Инсталирайте всички зависимости с:
 ```bash
-pip install -r reqirements.txt
+pip install -r requirements.txt
 ```
 
 ## 4️⃣ Стартиране на приложението
