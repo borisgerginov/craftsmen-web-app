@@ -55,17 +55,33 @@ cd craftsmen-web-app
 ```
 
 ## 2️⃣ Създаване на виртуална среда
-# Windows (PowerShell)
+Windows (PowerShell)
+
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-# Linux / macOS
+Linux / macOS
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+```
+
+## 3️⃣ Инсталиране на зависимости
+Проектът използва **requirements.txt**. Инсталирайте всички зависимости с:
+```bash
+pip install -r reqirements.txt
+```
+
+## 4️⃣ Стартиране на приложението
+```bash
+python run.py
+```
+След това отворете в браузър:
+```cpp
+http://127.0.0.1:5000/
 ```
 
 
