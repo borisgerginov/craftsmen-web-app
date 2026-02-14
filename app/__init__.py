@@ -26,7 +26,7 @@ def seed_categories():
 
     db.session.commit()
 
-def create_app(test_config):
+def create_app(test_config=None):
     app = Flask(__name__)
     app.config["SECRET_KEY"] = "my-secret"
 
